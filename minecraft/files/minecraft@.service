@@ -1,0 +1,17 @@
+[Unit]
+Description=Minecraft Server %i
+
+[Service]
+EnvironmentFile=/srv/minecraft/%i/systemd.conf
+WorkingDirectory=/srv/minecraft/%i
+User=%i
+
+ExecStart=/usr/bin/screen -h 1024 -DmS %i /bin/java -Xms${XMS} -Xmx${XMX} -jar minecraft_server.jar nogui 
+
+ExecStop=/usr/bin/screen -p 0 -S %i -X eval 'stuff "say SERVER SHUTTING DOWN. Saving map..."\\015'
+ExecStop=/usr/bin/screen -p 0 -S %i -X eval 'stuff "save-all"\\015'
+ExecStop=/usr/bin/screen -p 0 -S %i -X eval 'stuff "stop"\\015'
+ExecStop=/bin/sleep 2
+
+[Install]
+WantedBy=multi-user.target
