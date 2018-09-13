@@ -6,7 +6,6 @@ define minecraft::instance ($version, $eula='true', $port, $state='stopped', $xm
   }
 
   exec { "download_minecraft_for_${instance_name}":
-#    command => "/usr/bin/wget -q -O minecraft_server.${download}.jar https://s3.amazonaws.com/Minecraft.Download/versions/${download}/minecraft_server.${download}.jar",
     command => "/usr/bin/wget -q -O minecraft_server.${download}.jar $(/srv/minecraft/get-minecraft-download-url.sh ${download})",
     cwd     => '/srv/minecraft',
     creates => "/srv/minecraft/minecraft_server.${download}.jar",
@@ -67,7 +66,7 @@ define minecraft::instance ($version, $eula='true', $port, $state='stopped', $xm
 
   service { "minecraft@${instance_name}":
     ensure => "${state}",
-    enable => true,
+    enable => "${state}" ? {'running' => true, default  => false},
     require => Augeas["server.properties_for_${instance_name}","eula.txt_for_${instance_name}"]
   }
 
