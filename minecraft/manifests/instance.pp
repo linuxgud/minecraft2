@@ -24,6 +24,7 @@ define minecraft::instance ($version, $eula='true', $port, $state='stopped', $xm
     ensure  => link,
     target  => "/srv/minecraft/minecraft_server.${download}.jar",
     require => User["$instance_name"],
+    notify  => Service["minecraft@${instance_name}"],
   }
 
   file {
