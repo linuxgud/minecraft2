@@ -6,7 +6,7 @@ define minecraft::instance ($version, $eula='true', $port, $state='stopped', $xm
   }
 
   exec { "download_minecraft_for_${instance_name}":
-    command => "/usr/bin/wget -q -O minecraft_server.${download}.jar $(/srv/minecraft/get-minecraft-download-url.sh ${download})",
+    command => "/usr/bin/wget -q -O minecraft_server.${download}.jar $(/srv/minecraft/get-minecraft-download-url.py ${download})",
     cwd     => '/srv/minecraft',
     creates => "/srv/minecraft/minecraft_server.${download}.jar",
     

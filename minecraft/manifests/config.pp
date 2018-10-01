@@ -26,21 +26,21 @@ class minecraft::config {
     }
   }
 
-  file { '/srv/minecraft/get-minecraft-download-url.sh':
-    source  => 'puppet:///modules/minecraft/get-minecraft-download-url.sh',
+  file { '/srv/minecraft/get-minecraft-download-url.py':
+    source  => 'puppet:///modules/minecraft/get-minecraft-download-url.py',
     mode    => '0544',
     require => File['/srv/minecraft'],
   }
 
-  file { '/srv/minecraft/update-minecraft-facts.sh':
-    source  => 'puppet:///modules/minecraft/update-minecraft-facts.sh',
+  file { '/srv/minecraft/update-minecraft-facts.py':
+    source  => 'puppet:///modules/minecraft/update-minecraft-facts.py',
     mode    => '0544',
     require => File['/srv/minecraft'],
   }
 
   cron { 'update-minecraft-facts':
-    command => '/srv/minecraft/update-minecraft-facts.sh',
+    command => '/srv/minecraft/update-minecraft-facts.py',
     minute  => '*/30',
-    require => File['/srv/minecraft/update-minecraft-facts.sh'],
+    require => File['/srv/minecraft/update-minecraft-facts.py'],
   }
 }
