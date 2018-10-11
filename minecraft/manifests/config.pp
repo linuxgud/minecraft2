@@ -4,12 +4,6 @@ class minecraft::config {
     mode   => '0755',
   }
 
-  file { '/usr/bin/jsawk':
-    ensure => file,
-    mode   => '0555',
-    source => 'puppet:///modules/minecraft/jsawk'
-  }
-
   file { '/etc/systemd/system/minecraft@.service':
     ensure => file,
     owner  => 'root',
